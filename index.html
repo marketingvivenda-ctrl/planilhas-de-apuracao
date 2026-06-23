@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central de Avaliações · Vivenda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14271C;
+    --paper:#F5F4EF;
+    --card:#FBFAF6;
+    --line:#E0DDD2;
+    --muted:#6B7268;
+    --pine:#234A35;
+    --brass:#B0822A;
+    --leaf:#2E5A40;
+    --clay:#A8503A;
+    --focus:#234A35;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  html{-webkit-text-size-adjust:100%}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---- Top bar ---- */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:26px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .mark{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:800;
+    letter-spacing:.14em;
+    font-size:.95rem;
+    text-transform:uppercase;
+  }
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-size:.74rem;
+    font-weight:500;
+    letter-spacing:.04em;
+    color:var(--muted);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:6px 13px;
+    background:var(--card);
+  }
+  .pill .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--leaf);
+  }
+
+  /* ---- Hero ---- */
+  .hero{
+    padding:74px 0 56px;
+  }
+  .eyebrow{
+    font-size:.78rem;
+    font-weight:600;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin-bottom:18px;
+  }
+  h1{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:700;
+    font-size:clamp(2.6rem,6vw,4.3rem);
+    line-height:1.02;
+    letter-spacing:-.02em;
+    max-width:14ch;
+  }
+  .lede{
+    margin-top:22px;
+    font-size:1.08rem;
+    color:var(--muted);
+    max-width:46ch;
+  }
+
+  /* ---- Cards ---- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    padding-bottom:72px;
+  }
+  .card{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:30px 28px 24px;
+    text-decoration:none;
+    color:inherit;
+    overflow:hidden;
+    transition:transform .28s cubic-bezier(.2,.7,.2,1), box-shadow .28s, border-color .28s;
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:4px;
+    background:var(--accent);
+    transition:width .28s cubic-bezier(.2,.7,.2,1);
+  }
+  .card:hover, .card:focus-visible{
+    transform:translateY(-5px);
+    box-shadow:0 18px 40px -22px rgba(20,39,28,.45);
+    border-color:var(--accent);
+    outline:none;
+  }
+  .card:hover::before, .card:focus-visible::before{ width:7px; }
+  .card:focus-visible{ box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--accent); }
+
+  .cat{
+    font-size:.74rem;
+    font-weight:600;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:auto;
+  }
+  .card h2{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:700;
+    font-size:1.5rem;
+    line-height:1.12;
+    letter-spacing:-.01em;
+    margin-top:30px;
+  }
+  .card p{
+    margin-top:11px;
+    font-size:.93rem;
+    color:var(--muted);
+  }
+  .foot{
+    margin-top:26px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .open{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-weight:600;
+    font-size:.9rem;
+    color:var(--ink);
+  }
+  .open .arrow{
+    transition:transform .28s cubic-bezier(.2,.7,.2,1);
+  }
+  .card:hover .open .arrow,
+  .card:focus-visible .open .arrow{ transform:translateX(5px); }
+  .tag{
+    font-size:.72rem;
+    font-weight:500;
+    color:var(--muted);
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:4px 10px;
+    white-space:nowrap;
+  }
+
+  /* ---- Footer ---- */
+  footer{
+    margin-top:auto;
+    border-top:1px solid var(--line);
+  }
+  .footrow{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:24px 0;
+    font-size:.82rem;
+    color:var(--muted);
+    flex-wrap:wrap;
+  }
+  .footrow strong{ color:var(--ink); font-weight:600; }
+
+  @media (max-width:820px){
+    .grid{ grid-template-columns:1fr; }
+    .card h2{ margin-top:20px; }
+    .hero{ padding:54px 0 40px; }
+  }
+  @media (max-width:480px){
+    .wrap{ padding:0 20px; }
+    .topbar{ padding:20px 0; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="topbar">
+      <span class="mark">Vivenda</span>
+      <span class="pill"><span class="dot"></span>Somente leitura</span>
+    </div>
+  </div>
+
+  <header class="wrap hero">
+    <p class="eyebrow">Central de avaliações</p>
+    <h1>Campanhas &amp; Copa Vivenda</h1>
+    <p class="lede">Acesse as planilhas de avaliação. Tudo em modo de leitura e sempre atualizado — basta escolher abaixo.</p>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+
+      <a class="card" style="--accent:var(--brass)"
+         href="https://docs.google.com/spreadsheets/d/1f1-TbC9LaHIWz5l_WPn-_3eDNMMJNqXiwdKafyhRm9M/preview"
+         target="_blank" rel="noopener">
+        <span class="cat">Competição</span>
+        <h2>Copa Vivenda</h2>
+        <p>Classificação geral e desempenho por etapa, organizados em várias abas.</p>
+        <div class="foot">
+          <span class="open">Abrir planilha <span class="arrow">→</span></span>
+          <span class="tag">Várias abas</span>
+        </div>
+      </a>
+
+      <a class="card" style="--accent:var(--leaf)"
+         href="https://docs.google.com/spreadsheets/d/1cEN8ZyG4Fcv4-GwkEf6ZJZW6CkspseJcOCc3J62N0g8/preview"
+         target="_blank" rel="noopener">
+        <span class="cat">Produto</span>
+        <h2>Campanha Linha Vivenda</h2>
+        <p>Avaliação e acompanhamento da campanha da linha Vivenda.</p>
+        <div class="foot">
+          <span class="open">Abrir planilha <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="card" style="--accent:var(--clay)"
+         href="https://docs.google.com/spreadsheets/d/1lf20jIkaUxAZLzml52-4hzo8uyZZ2ExemB_g3qLBLJ0/preview"
+         target="_blank" rel="noopener">
+        <span class="cat">Comercial</span>
+        <h2>Campanha Comercial</h2>
+        <p>Avaliação da campanha comercial e dos produtos.</p>
+        <div class="foot">
+          <span class="open">Abrir planilha <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap footrow">
+      <span><strong>Vivenda</strong> · Central de avaliações</span>
+      <span>Atualiza automaticamente · Acesso somente leitura</span>
+    </div>
+  </footer>
+
+</body>
+</html>
